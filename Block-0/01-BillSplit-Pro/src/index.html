@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>
+			BillSplit Pro | Split bills beautifully with precision and style
+		</title>
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/responsive.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+			rel="stylesheet" />
+		<link
+			rel="shortcut icon"
+			href="../assets/icons/favicon.ico"
+			type="image/x-icon" />
+	</head>
+	<body>
+		<div id="app_container">
+			<header id="header">
+				<nav id="navbar">
+					<h1 class="nav_heading">BillSplit Pro</h1>
+					<p class="nav_slogan">
+						Split bills beautifully with precision and style
+					</p>
+				</nav>
+			</header>
+
+			<main id="main">
+				<form action="#" id="billing_form">
+					<label for="bill_input" class="labels" id="bill_label"
+						>Bill Amount ₹</label
+					>
+					<input
+						type="number"
+						class="input_field"
+						id="bill_input"
+						placeholder="Enter bill amount" />
+
+					<label for="diners" class="labels" id="diners_label"
+						>Number of Diners</label
+					>
+					<input
+						type="number"
+						class="input_field"
+						id="diners"
+						value="2" />
+
+					<button id="split_btn">Split</button>
+				</form>
+
+				<div class="special_buttons">
+					<button class="special_btns" id="copy_btn">
+						Copy Result
+					</button>
+					<button class="special_btns" id="share_btn">Share</button>
+					<button class="special_btns" id="export_btn">
+						Export File
+					</button>
+				</div>
+			</main>
+		</div>
+		<script src="js/script.js"></script>
+	</body>
+</html>

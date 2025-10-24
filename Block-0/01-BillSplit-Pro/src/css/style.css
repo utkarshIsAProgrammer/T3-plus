@@ -1,0 +1,67 @@
+/* || Font Family */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+/* || Reset */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: "Inter", sans-serif;
+}
+
+/* || App Container */
+#app_container {
+	width: 90%;
+	margin: 0 auto;
+}
+
+/* || Navbar */
+#navbar {
+	text-align: center;
+	margin-top: 40px;
+}
+
+.nav_heading {
+	font-size: 3.6rem;
+}
+
+.nav_slogan {
+	font-size: 1.1rem;
+}
+
+/* || Billing Form */
+#billing_form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	margin-top: 40px;
+	text-align: center;
+}
+
+.labels {
+	margin-bottom: 5px;
+}
+
+.input_field {
+	margin-bottom: 10px;
+}
+
+/* || Result Container */
+.split_container {
+	text-align: center;
+}
+
+/* || Special Buttons */
+.special_buttons {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.special_btns {
+	margin-right: 10px;
+}
