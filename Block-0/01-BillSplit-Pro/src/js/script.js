@@ -19,11 +19,58 @@ let errorMessage;
 
 // Function that splits the bill
 function splitBill(amount, people) {
-	result = (amount / people).toFixed(2);
+	// Use Math.round to handle floating-point precision before formatting
+	result = (Math.round((amount / people) * 100) / 100).toFixed(2);
 	return result;
 }
 
-// Button click event listener
+// Function to save data to localStorage
+function saveToLocalStorage() {
+	const data = {
+		billValue: billValue,
+		dinersValue: dinersValue,
+		splitResult: splitResult,
+		resultText: splitContainer.textContent,
+		timestamp: new Date().toISOString(),
+	};
+	localStorage.setItem("billSplitData", JSON.stringify(data));
+}
+
+// Function to load data from localStorage
+function loadFromLocalStorage() {
+	const savedData = localStorage.getItem("billSplitData");
+
+	if (savedData) {
+		const data = JSON.parse(savedData);
+
+		// Restore input values
+		billAmount.value = data.billValue;
+		diners.value = data.dinersValue;
+
+		// Recreate the result container
+		splitContainer = document.createElement("p");
+		splitContainer.className = "split_container";
+		splitContainer.textContent = data.resultText;
+		document.getElementById("billing_form").appendChild(splitContainer);
+
+		// Enable action buttons
+		copyBtn.disabled = false;
+		shareBtn.disabled = false;
+		exportBtn.disabled = false;
+
+		// Update variables
+		billValue = data.billValue;
+		dinersValue = data.dinersValue;
+		splitResult = data.splitResult;
+	}
+}
+
+// Call this when the page loads
+window.addEventListener("DOMContentLoaded", () => {
+	loadFromLocalStorage();
+});
+
+// Button click event listener (SINGLE LISTENER WITH localStorage INTEGRATED)
 splitBtn.addEventListener("click", () => {
 	if (splitContainer) {
 		splitContainer.remove();
@@ -42,20 +89,16 @@ splitBtn.addEventListener("click", () => {
 		if (billAmount.value === "" || isNaN(billValue) || billValue <= 0) {
 			errorMessage = document.createElement("p");
 			errorMessage.className = "error_msg";
-
 			errorMessage.textContent = "Please enter a valid amount!";
 			document.getElementById("bill_label").appendChild(errorMessage);
-
 			throw new Error("Please enter a valid amount.");
 		}
 
 		if (diners.value === "" || isNaN(dinersValue) || dinersValue <= 0) {
 			errorMessage = document.createElement("p");
 			errorMessage.className = "error_msg";
-
 			errorMessage.textContent = "Please enter a valid number of diners!";
 			document.getElementById("diners_label").appendChild(errorMessage);
-
 			throw new Error("Please enter a valid number of diners.");
 		}
 	} catch (err) {
@@ -71,8 +114,8 @@ splitBtn.addEventListener("click", () => {
 	splitResult = splitBill(billValue, dinersValue);
 
 	// Total amount paid by others and the amount to be paid by the last one
-	totalPaidByOthers = splitResult * (dinersValue - 1);
-	lastPersonPays = billValue - totalPaidByOthers;
+	totalPaidByOthers = (splitResult * (dinersValue - 1)).toFixed(2);
+	lastPersonPays = (billValue - totalPaidByOthers).toFixed(2);
 
 	// Edge case (if the total split amount is not equal to the bill amount)
 	if (billValue !== splitResult * dinersValue) {
@@ -81,13 +124,16 @@ splitBtn.addEventListener("click", () => {
 		splitContainer.textContent = `Each person should pay: ₹${splitResult}`;
 	}
 
-	// Adding result container element to the web page
-	document.body.appendChild(splitContainer);
+	// Adding result container element to the form (below the split button)
+	document.getElementById("billing_form").appendChild(splitContainer);
 
 	// Enable action buttons after calculation
 	copyBtn.disabled = false;
 	shareBtn.disabled = false;
 	exportBtn.disabled = false;
+
+	// Save to localStorage
+	saveToLocalStorage();
 });
 
 // Function that copies the result
